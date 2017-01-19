@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         cursor.setOnTouchListener(OnCursorListener(layoutMain) { x: Int, y: Int ->
-            printIndicator((x-cursor.width/2).toInt(), (y- cursor.height/2).toInt())
+            printIndicator()
             viewCollisions.forEach {
                 if(hasCollision(it)){
                     adjustment(it)
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         val y = view.y + (view.height - cursor.height)/2
         vibrator.vibrate(80)
         centerCursor(x, y)
-        printIndicator(x.toInt(), y.toInt())
+        printIndicator()
     }
 
     private fun  hasCollision(view: View):Boolean{
@@ -62,9 +62,16 @@ class MainActivity : AppCompatActivity() {
         return distance < radiusSum
     }
 
-    private fun printIndicator(x:Int, y:Int){
-        val d = centerX - 90
-        indicator.text = "X=${x-d}, x=$x"
+    private fun printIndicator(){
+        val x = cursor.x
+        val y = cursor.y
+
+        val sh = cursor.width/2 - 40
+
+        val ph = (90/(centerY-sh))*(y-sh)
+        val pw = (90/(centerX-sh))*(x-sh)
+
+        indicator.text = "($x,$y) ($centerX,$centerY)  H=$ph, W=$pw"
     }
 
     private fun centerCursor(x:Float, y: Float){
