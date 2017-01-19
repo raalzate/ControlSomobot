@@ -70,13 +70,13 @@ class MainActivity : AppCompatActivity() {
 
         val ph = ((90/(centerY-sh))*(y-sh)).toInt().toDouble()
         val pw = ((90/(centerX-sh))*(x-sh)).toInt().toDouble()
-        val a = Math.toDegrees(Math.atan(pw/ph)).toInt()
+        val a = Math.toDegrees(Math.atan((pw-90)/(ph-90))).toInt()
 
-        indicator.text =
-                "($x,$y) ($centerX,$centerY)\n" +
+        indicator.text = "($x,$y) ($centerX,$centerY)\n" +
                 "W=$pw,H=$ph (A=$a)\n" +
-                 "M1=${Math.abs(pw-90)},M2=$ph"
+                 "M1=${Math.abs(pw)},M2=${Math.abs(ph)}"
     }
+
 
     private fun centerCursor(x:Float, y: Float){
         cursor.x = x
